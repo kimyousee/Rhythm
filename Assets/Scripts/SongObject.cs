@@ -103,19 +103,22 @@ public class SongObject : MonoBehaviour {
     }
 
     IEnumerator Fade(string into, GameObject obj) {
-        float rate = 1f/bps;
+        float rate = 1f/bps*20f;
         if (into == "in") {
             for (float f = 0f; f <= 1.05f; f += 0.100f) {
                 Color c = obj.renderer.material.color;
                 c.a = f;
                 obj.renderer.material.color = c;
+                Debug.Log(obj.renderer.material.color.a);
+                // if (obj.renderer.material.color.a >= 0.999) { //if circle is solid
+                //     // Color solid = obj.renderer.material.color;
+                //     // solid.a = 1;
+                //     // obj.renderer.material.color = solid;
+                //     into = "out";
+                //     yield return new WaitForSeconds(0.1f);
+                //     break;
+                // }
                 yield return new WaitForSeconds (rate);
-                // Debug.Log(obj.renderer.material.color.a);
-                if (obj.renderer.material.color.a >= 0.99) { //if circle is solid
-                    //StartCoroutine (Fade ("out",obj));
-                    into = "out";
-                    break;
-                }
             }
         }
         if (into == "out") {
@@ -125,6 +128,7 @@ public class SongObject : MonoBehaviour {
                 obj.renderer.material.color = c;
                 yield return new WaitForSeconds (rate);
             }
+            obj.SetActive(false);
         }
     }
 

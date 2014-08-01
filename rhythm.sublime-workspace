@@ -39,7 +39,7 @@
 			"file": "Assets/Scripts/SongObject.cs",
 			"settings":
 			{
-				"buffer_size": 9111,
+				"buffer_size": 9335,
 				"line_ending": "Unix"
 			}
 		},
@@ -116,6 +116,7 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Kim/Documents/Projects/Rhythm/.gitignore",
 		"/C/Users/Kim/Documents/Projects/Rhythm/Assets/Scripts/GameController.cs",
 		"/C/Users/Kim/Documents/Projects/Rhythm/Assets/Scripts/HoldOneButton.cs",
 		"/C/Users/Kim/Documents/Projects/Rhythm/Assets/Scripts/PushOneButton.cs",
@@ -144,6 +145,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"SetActive",
+			"setActive",
 			"obj.renderer.color",
 			"obj.renderer.color = ",
 			"obj.renderer.color = \n				break;",
@@ -212,17 +215,18 @@
 						"selection":
 						[
 							[
-								791,
-								791
+								1765,
+								1774
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 102.0,
+						"translation.y": 391.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -232,15 +236,15 @@
 					"file": "Assets/Scripts/SongObject.cs",
 					"settings":
 					{
-						"buffer_size": 9111,
+						"buffer_size": 9335,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4194,
-								4194
+								2611,
+								2611
 							]
 						],
 						"settings":
@@ -250,10 +254,11 @@
 								78
 							],
 							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1779.0,
+						"translation.y": 1064.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -277,10 +282,11 @@
 						"settings":
 						{
 							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 262.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -304,6 +310,7 @@
 						"settings":
 						{
 							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
@@ -331,6 +338,7 @@
 						"settings":
 						{
 							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
@@ -358,6 +366,7 @@
 						"settings":
 						{
 							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
