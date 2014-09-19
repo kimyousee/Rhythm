@@ -8,8 +8,11 @@ public class NotesPool : MonoBehaviour {
     public GameObject pushOneNote;
     public GameObject holdOneNote;
     public GameObject pushTwoNote;
+    public PushOneButton pushOneScript;
     public int pooledAmount = 10;
     public bool willGrow = true;
+    public SongObject song;
+    public Note note;
 
     List<GameObject> pushOneNotes;
     List<GameObject> holdOneNotes;
@@ -17,6 +20,8 @@ public class NotesPool : MonoBehaviour {
 
     void Awake(){
         current = this; //pointer to this whole object
+        GameObject songObj = GameObject.Find("SongObject");
+        song = songObj.GetComponent<SongObject>();
     }
 
     //make the pool of notes
@@ -37,25 +42,28 @@ public class NotesPool : MonoBehaviour {
         }
     }
 
-    public GameObject getPooledObject(string noteType){
+    public GameObject getPooledObject(Note note){
+        string noteType = note.noteType;
         switch (noteType){
             case "push1":
                 for (int i = 0; i < pushOneNotes.Count; i++){
-                    if (pushOneNotes[i].activeInHierarchy){ //if the note we need is in the pool
+                    if (!pushOneNotes[i].activeInHierarchy){ //if the note we need is in the pool
+                        pushOneScript = pushOneNotes[i].GetComponent<PushOneButton>();
+                        pushOneScript.note = note;
                         return pushOneNotes[i];
                     }
                 }
                 break;
             case "hold1":
                 for (int i = 0; i < holdOneNotes.Count; i++){
-                    if (holdOneNotes[i].activeInHierarchy){ //if the note we need is in the pool
+                    if (!holdOneNotes[i].activeInHierarchy){ //if the note we need is in the pool
                         return holdOneNotes[i];
                     }
                 }
                 break;
             case "push2":
                 for (int i = 0; i < pushTwoNotes.Count; i++){
-                    if (pushTwoNotes[i].activeInHierarchy){ //if the note we need is in the pool
+                    if (!pushTwoNotes[i].activeInHierarchy){ //if the note we need is in the pool
                         return pushTwoNotes[i];
                     }
                 }

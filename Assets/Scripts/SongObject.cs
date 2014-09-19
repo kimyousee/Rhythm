@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 // Manages the song's targets
 public class SongObject : MonoBehaviour {
     private GameController gameCtr; //used to get song,diff,bps
+    private Target target;
     private PushOneButton pushOne;
     private HoldOneButton holdOne;
     private PushTwoButtons pushTwo;
@@ -19,17 +20,19 @@ public class SongObject : MonoBehaviour {
     void Awake(){
         // get GameObjects with components we need
         GameObject gameCtrObj = GameObject.Find("GameController");
+        GameObject targCtrObj = GameObject.Find("Target");
         // GameObject pushOneObj = GameObject.Find("PushOneButton");
         // GameObject holdOneObj = GameObject.Find("HoldOneButton");
         // GameObject pushTwoObj = GameObject.Find("PushTwoButtons");
 
         gameCtr = gameCtrObj.GetComponent<GameController>();
-        //targetCtr = targetCtrObj.GetComponent<Target>();
+        target = targCtrObj.GetComponent<Target>();
 
         // pushOne = pushOneObj.GetComponent<PushOneButton>();
         // holdOne = holdOneObj.GetComponent<HoldOneButton>();
         // pushTwo = pushTwoObj.GetComponent<PushTwoButtons>();
 
+        target.notes = notes;
         difficulty = gameCtr.difficulty;
         song = gameCtr.song;
         bps = gameCtr.bps;
@@ -53,71 +56,102 @@ public class SongObject : MonoBehaviour {
     // list of notes for each song... **have to change depending on difficulty**
     List<Note> songNotes(string song){
         List<Note> Notes = new List<Note>(); // [time, note]
-        if (song == "") {
-            Notes.Add(new Note(1.50f,"push1",new Vector3(20,20,0),8));
+        if (song == "") { //make this a switch statement later
+            Notes.Add(new Note(1.50f,"push1",new Vector3(20,20,0),1));
             Notes.Add(new Note(3.00f,"push1",new Vector3(10,10,0),5));
         }
-
+        target.notes = Notes;
         return Notes;
     }
 
-    void setUpNote(Note note){
-        GameObject obj = NotesPool.current.getPooledObject(note.noteType);
-        if (obj == null) return;
+    GameObject setUpNote(Note note){
+        GameObject obj = NotesPool.current.getPooledObject(note);
 
+        if (obj == null) return null;
+        //obj.transform.parent = target.transform;
         obj.transform.position = note.position;
         obj.transform.rotation = transform.rotation;
         float[] col = noteColour(note.button);
         obj.renderer.material.color = new Color(col[0],col[1],col[2]);
 
-        obj.SetActive(true);
-        StartCoroutine(Fade("in",obj));
+        Color c = obj.renderer.material.color;
+        c.a = 0f;
+        obj.renderer.material.color = c;
 
+        obj.SetActive(true);
+        return obj;
     }
 
     IEnumerator spawnNotes(List<Note> notes) {
+        float fadeTime = (1f/bps)*50f;
+        GameObject noteObj = null;
         // while there are notes
         for (int noteNum = 0; noteNum < notes.Count ; noteNum += 1) {
             switch (notes[noteNum].noteType){
                 case "push1":
-                    setUpNote(notes[noteNum]);
+                    noteObj = setUpNote(notes[noteNum]);
+                    StartCoroutine(Fade(noteObj));
                     break;
                 case "hold1":
-                    setUpNote(notes[noteNum]);
+                    noteObj = setUpNote(notes[noteNum]);
                     break;
                 case "push2":
-                    setUpNote(notes[noteNum]);
+                    noteObj = setUpNote(notes[noteNum]);
                     break;
                 default:
                     break;
             }
+            // if (noteObj.renderer.material.color.a == 1f){
+            //     iTween.FadeTo(noteObj,0f,1f);
+            // }
             // spawn next note at the time when fade starts
             if (noteNum +1 < notes.Count)
                 yield return new WaitForSeconds(notes[noteNum+1].time
-                                                -notes[noteNum].time
-                                                -(1f/bps)*10 );
+                                                -notes[noteNum].time);
+                                                //-fadeTime );
             else
-                yield return new WaitForSeconds(notes[noteNum].time
-                                                +(1f/bps)*10);
+                yield return new WaitForSeconds(notes[noteNum].time);
+                                                //+fadeTime);
         }
     }
-
+    IEnumerator fadeInOut(GameObject note, string which){
+        if (which == "in"){
+            iTween.FadeTo(note,1f,1f);
+        } else if (which == "out"){
+            iTween.FadeTo(note,0f,1f);
+        }
+        yield return new WaitForSeconds(1f); // fame this the same time as 3rd arg above
+    }
+    IEnumerator Fade(GameObject note){
+        Debug.Log("starting fade0");
+        yield return StartCoroutine(fadeInOut(note, "in")); // Fade in
+        Debug.Log("Done fade in");
+        if (note.active)
+            yield return new WaitForSeconds(0.1f); // can get perfect note for 0.1s
+        else yield break;
+        if (note.active){
+            Debug.Log("Fading out");
+            yield return StartCoroutine(fadeInOut(note,"out")); // Fade out
+            note.SetActive(false);
+        } else yield break;
+    }
+    /*
     IEnumerator Fade(string into, GameObject obj) {
-        float rate = 1f/bps*20f;
+        float rate = 1f/bps;
         if (into == "in") {
-            for (float f = 0f; f <= 1.05f; f += 0.100f) {
+            for (float f = 0f; f <= 1.05f; f += 0.1f) {
                 Color c = obj.renderer.material.color;
                 c.a = f;
                 obj.renderer.material.color = c;
                 Debug.Log(obj.renderer.material.color.a);
-                // if (obj.renderer.material.color.a >= 0.999) { //if circle is solid
-                //     // Color solid = obj.renderer.material.color;
-                //     // solid.a = 1;
-                //     // obj.renderer.material.color = solid;
-                //     into = "out";
-                //     yield return new WaitForSeconds(0.1f);
-                //     break;
-                // }
+                if (obj.renderer.material.color.a >= 0.999) { //if circle is solid
+                    // Color solid = obj.renderer.material.color;
+                    // solid.a = 1;
+                    // obj.renderer.material.color = solid;
+                    into = "out";
+                    yield return new WaitForSeconds(0.1f);
+                    break;
+                }
                 yield return new WaitForSeconds (rate);
             }
         }
@@ -130,7 +164,7 @@ public class SongObject : MonoBehaviour {
             }
             obj.SetActive(false);
         }
-    }
+    }*/
 
     // Array[3] to make RGB colour
     float[] noteColour(int button) {

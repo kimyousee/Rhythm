@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PushOneButton : Target {
+public class PushOneButton : MonoBehaviour {
     public string colour;
     public Note note;
+    public Target target;
 
     void Awake(){
-        base.noteType = "push1";
-        base.note = note;
+        GameObject targCtrObj = GameObject.Find("Target");
+        target = targCtrObj.GetComponent<Target>();
+        this.transform.parent = target.transform;
+        target.noteType.Add("push1");
+        target.note = note;
     }
     // Note sure if this is needed; check later.
     //protected override void Start () {
@@ -16,10 +20,10 @@ public class PushOneButton : Target {
     //}
     
     // Update is called once per frame
-    protected override void Update () {
+    void Update() {
         string key = keyPushed();
-        base.key = key;
-        base.Update();
+        target.key.Add(key);
+        // Debug.Log(target.key.Count);
     }
 
     // Check which key is pushed

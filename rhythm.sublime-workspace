@@ -31,15 +31,7 @@
 			"file": "Assets/Scripts/Target.cs",
 			"settings":
 			{
-				"buffer_size": 2285,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/Scripts/SongObject.cs",
-			"settings":
-			{
-				"buffer_size": 9335,
+				"buffer_size": 3451,
 				"line_ending": "Unix"
 			}
 		},
@@ -47,7 +39,15 @@
 			"file": "Assets/Scripts/NotesPool.cs",
 			"settings":
 			{
-				"buffer_size": 3083,
+				"buffer_size": 3460,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/SongObject.cs",
+			"settings":
+			{
+				"buffer_size": 10741,
 				"line_ending": "Unix"
 			}
 		},
@@ -55,7 +55,7 @@
 			"file": "Assets/Scripts/PushOneButton.cs",
 			"settings":
 			{
-				"buffer_size": 1793,
+				"buffer_size": 1996,
 				"line_ending": "Unix"
 			}
 		},
@@ -63,7 +63,7 @@
 			"file": "Assets/Scripts/PushTwoButtons.cs",
 			"settings":
 			{
-				"buffer_size": 469,
+				"buffer_size": 638,
 				"line_ending": "Unix"
 			}
 		},
@@ -116,9 +116,9 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Kim/Documents/Projects/Rhythm/Assets/Scripts/HoldOneButton.cs",
 		"/C/Users/Kim/Documents/Projects/Rhythm/.gitignore",
 		"/C/Users/Kim/Documents/Projects/Rhythm/Assets/Scripts/GameController.cs",
-		"/C/Users/Kim/Documents/Projects/Rhythm/Assets/Scripts/HoldOneButton.cs",
 		"/C/Users/Kim/Documents/Projects/Rhythm/Assets/Scripts/PushOneButton.cs",
 		"/C/Users/Kim/AppData/Roaming/Sublime Text 2/Packages/User/Default (Windows).sublime-keymap",
 		"/C/Users/Kim/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
@@ -134,7 +134,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 100.0,
 		"where_history":
 		[
 			""
@@ -145,6 +145,17 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"noteType",
+			"this.transform.parent",
+			"base",
+			"target",
+			"Target",
+			"Debug",
+			"note",
+			"SetActive",
+			"obj",
+			"noteObj",
+			"Fade",
 			"SetActive",
 			"setActive",
 			"obj.renderer.color",
@@ -200,7 +211,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -208,15 +219,15 @@
 					"file": "Assets/Scripts/Target.cs",
 					"settings":
 					{
-						"buffer_size": 2285,
+						"buffer_size": 3451,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1765,
-								1774
+								1510,
+								1510
 							]
 						],
 						"settings":
@@ -226,25 +237,53 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 391.0,
+						"translation.y": 21.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Assets/Scripts/SongObject.cs",
+					"file": "Assets/Scripts/NotesPool.cs",
 					"settings":
 					{
-						"buffer_size": 9335,
+						"buffer_size": 3460,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2611,
-								2611
+								1934,
+								1934
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 464.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Assets/Scripts/SongObject.cs",
+					"settings":
+					{
+						"buffer_size": 10741,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								290,
+								290
 							]
 						],
 						"settings":
@@ -258,35 +297,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1064.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Assets/Scripts/NotesPool.cs",
-					"settings":
-					{
-						"buffer_size": 3083,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								402,
-								402
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 456.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -296,15 +307,15 @@
 					"file": "Assets/Scripts/PushOneButton.cs",
 					"settings":
 					{
-						"buffer_size": 1793,
+						"buffer_size": 1996,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								333,
-								333
+								630,
+								630
 							]
 						],
 						"settings":
@@ -314,7 +325,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 246.0,
+						"translation.y": 138.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -324,15 +335,15 @@
 					"file": "Assets/Scripts/PushTwoButtons.cs",
 					"settings":
 					{
-						"buffer_size": 469,
+						"buffer_size": 638,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								189,
-								189
+								416,
+								416
 							]
 						],
 						"settings":
@@ -359,8 +370,8 @@
 						"selection":
 						[
 							[
-								235,
-								235
+								734,
+								734
 							]
 						],
 						"settings":
@@ -370,7 +381,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 108.0,
+						"translation.y": 934.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

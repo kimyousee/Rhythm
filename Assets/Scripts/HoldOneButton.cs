@@ -4,16 +4,16 @@ using System.Collections;
 public class HoldOneButton : Target {
 
 	// Use this for initialization
-	protected override void Start () {
-		base.noteType = "hold1";
-		base.Start ();
+	void Start () {
+		// base.noteType = "hold1";
+		// base.Start ();
 	}
 	
 	// Update is called once per frame
-	protected override void Update () {
+	void Update () {
 		string key = keyHeld();
-		base.key = key;
-		base.Update();
+		// base.key = key;
+		// base.Update();
 	}
 
 	string keyHeld() {

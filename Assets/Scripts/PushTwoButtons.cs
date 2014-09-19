@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PushTwoButtons : Target {
+public class PushTwoButtons : MonoBehaviour {
+    public string colour;
+    public Note note;
+    public Target target;
 
     // Use this for initialization
-    protected override void Start () {
-        base.noteType = "hold2";
-        base.Start();
+    void Start () {
+        GameObject targCtrObj = GameObject.Find("Target");
+        target = targCtrObj.GetComponent<Target>();
+        this.transform.parent = target.transform;
+        target.noteType.Add("push2");
     }
     
     // Update is called once per frame
-    protected override void Update () {
+    void Update () {
         string key = keysPushed();
-        base.key = key;
-        base.Update();
+        target.key.Add(key);
     }
     //... make function
     string keysPushed(){
