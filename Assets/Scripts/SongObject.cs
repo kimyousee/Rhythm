@@ -4,33 +4,33 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-/* 
-Manages the song's targets/notes 
-This script also contains the class Note
-*/
+// Manages the song's targets
 public class SongObject : MonoBehaviour {
     private GameController gameCtr; //used to get song,diff,bps
     private Target target;
-    private SongNotes songNotesCtr;
     private PushOneButton pushOne;
     private HoldOneButton holdOne;
     private PushTwoButtons pushTwo;
     private string difficulty;
     private string song;
-    private int bps;                 //needed to know how fast to fade in/out
-    public List<Note> notes;         //list to keep all notes for the song
+    private int bps;         //needed to know how fast to fade in/out
+    public List<Note> notes; //list to keep all notes for the song
 
     //called before start function
     void Awake(){
         // get GameObjects with components we need
         GameObject gameCtrObj = GameObject.Find("GameController");
         GameObject targCtrObj = GameObject.Find("Target");
-        GameObject songCtrObj = GameObject.Find("SongNotes");
-        
+        // GameObject pushOneObj = GameObject.Find("PushOneButton");
+        // GameObject holdOneObj = GameObject.Find("HoldOneButton");
+        // GameObject pushTwoObj = GameObject.Find("PushTwoButtons");
 
         gameCtr = gameCtrObj.GetComponent<GameController>();
         target = targCtrObj.GetComponent<Target>();
-        songNotesCtr = songCtrObj.GetComponent<SongNotes>();
+
+        // pushOne = pushOneObj.GetComponent<PushOneButton>();
+        // holdOne = holdOneObj.GetComponent<HoldOneButton>();
+        // pushTwo = pushTwoObj.GetComponent<PushTwoButtons>();
 
         target.notes = notes;
         difficulty = gameCtr.difficulty;
@@ -41,8 +41,7 @@ public class SongObject : MonoBehaviour {
     void Start(){
         //switch (song){
         //case "<songName>": 
-        notes = songNotesCtr.songNotes(""); //replace "" with song later
-        target.notes = notes;
+        notes = songNotes(""); //replace "" with song later
         //play audio
         StartCoroutine(spawnNotes(notes));
     }
@@ -50,6 +49,19 @@ public class SongObject : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         //while audio is playing
+        //spawn notes
+        // StartCoroutine(spawnNotes(notes));
+    }
+
+    // list of notes for each song... **have to change depending on difficulty**
+    List<Note> songNotes(string song){
+        List<Note> Notes = new List<Note>(); // [time, note]
+        if (song == "") { //make this a switch statement later
+            Notes.Add(new Note(1.50f,"push1",new Vector3(20,20,0),1));
+            Notes.Add(new Note(3.00f,"push1",new Vector3(10,10,0),5));
+        }
+        target.notes = Notes;
+        return Notes;
     }
 
     GameObject setUpNote(Note note){
@@ -70,7 +82,6 @@ public class SongObject : MonoBehaviour {
         return obj;
     }
 
-    //spawns all the different types of notes from the list of notes
     IEnumerator spawnNotes(List<Note> notes) {
         float fadeTime = (1f/bps)*50f;
         GameObject noteObj = null;
@@ -79,11 +90,10 @@ public class SongObject : MonoBehaviour {
             switch (notes[noteNum].noteType){
                 case "push1":
                     noteObj = setUpNote(notes[noteNum]);
-                    StartCoroutine(Fade(noteObj,notes[noteNum]));
+                    StartCoroutine(Fade(noteObj));
                     break;
                 case "hold1":
                     noteObj = setUpNote(notes[noteNum]);
-                    StartCoroutine(Fade(noteObj,notes[noteNum]));
                     break;
                 case "push2":
                     noteObj = setUpNote(notes[noteNum]);
@@ -91,6 +101,9 @@ public class SongObject : MonoBehaviour {
                 default:
                     break;
             }
+            // if (noteObj.renderer.material.color.a == 1f){
+            //     iTween.FadeTo(noteObj,0f,1f);
+            // }
             // spawn next note at the time when fade starts
             if (noteNum +1 < notes.Count)
                 yield return new WaitForSeconds(notes[noteNum+1].time
@@ -101,66 +114,49 @@ public class SongObject : MonoBehaviour {
                                                 //+fadeTime);
         }
     }
-    /*IEnumerator fadeInOut(GameObject note, string which){
+    IEnumerator fadeInOut(GameObject note, string which){
         if (which == "in"){
-            if (note.active) iTween.FadeTo(note,1f,1f);
-            else yield break;
+            iTween.FadeTo(note,1f,1f);
         } else if (which == "out"){
-            if (note.active) iTween.FadeTo(note,0f,1f);
-            else yield break;
+            iTween.FadeTo(note,0f,1f);
         }
         yield return new WaitForSeconds(1f); // fame this the same time as 3rd arg above
-    }*/
-    IEnumerator Fade(GameObject note, Note noteObj){
-        GameObject noteCheck = note;
-        if (note != noteCheck) yield break;
-        Debug.Log("starting fade0");
-        if (note.active) yield return StartCoroutine(fadeInOut(note, "in",noteObj)); // Fade in
-        else yield break;
-        Debug.Log("Done fade in");
-        /*Debug.Log(noteObj.noteType);
-        if (note != noteCheck) yield break;
-        if (note.active){
-            if (note != noteCheck) yield break;
-            Debug.Log(noteObj.noteType);
-            if (noteObj.noteType == "hold1")
-                yield return new WaitForSeconds(noteObj.hold);
-            else if (noteObj.noteType == "push1")
-                yield return new WaitForSeconds(0.1f); // can get perfect note for 0.1s
-        }
-        else yield break;
-        if (note.active){
-            if (note != noteCheck) yield break;
-            Debug.Log("Fading out");
-            yield return StartCoroutine(fadeInOut(note,"out",noteObj)); // Fade out
-            note.SetActive(false);
-        } else yield break;*/
     }
-    
-    IEnumerator fadeInOut(GameObject obj,string into,Note noteObj) {
+    IEnumerator Fade(GameObject note){
+        Debug.Log("starting fade0");
+        yield return StartCoroutine(fadeInOut(note, "in")); // Fade in
+        Debug.Log("Done fade in");
+        if (note.active)
+            yield return new WaitForSeconds(0.1f); // can get perfect note for 0.1s
+        else yield break;
+        if (note.active){
+            Debug.Log("Fading out");
+            yield return StartCoroutine(fadeInOut(note,"out")); // Fade out
+            note.SetActive(false);
+        } else yield break;
+    }
+    /*
+    IEnumerator Fade(string into, GameObject obj) {
         float rate = 1f/bps;
         if (into == "in") {
-            for (float f = 0f; f <= 1.05f && obj.active; f += 0.1f) {
+            for (float f = 0f; f <= 1.05f; f += 0.1f) {
                 Color c = obj.renderer.material.color;
                 c.a = f;
                 obj.renderer.material.color = c;
-                // Debug.Log(obj.renderer.material.color.a);
+                Debug.Log(obj.renderer.material.color.a);
                 if (obj.renderer.material.color.a >= 0.999) { //if circle is solid
                     // Color solid = obj.renderer.material.color;
                     // solid.a = 1;
                     // obj.renderer.material.color = solid;
                     into = "out";
-                    if (noteObj.noteType == "hold1")
-                        yield return new WaitForSeconds(noteObj.hold);
-                    else if (noteObj.noteType == "push1")
-                        yield return new WaitForSeconds(0.1f); // can get perfect note for 0.1s
+                    yield return new WaitForSeconds(0.1f);
                     break;
                 }
                 yield return new WaitForSeconds (rate);
             }
         }
         if (into == "out") {
-            for (float f = 1f; f >= 0.05f && obj.active; f -= 0.100f) {
+            for (float f = 1f; f >= 0.05f; f -= 0.100f) {
                 Color c = obj.renderer.material.color;
                 c.a = f;
                 obj.renderer.material.color = c;
@@ -168,7 +164,7 @@ public class SongObject : MonoBehaviour {
             }
             obj.SetActive(false);
         }
-    }
+    }*/
 
     // Array[3] to make RGB colour
     float[] noteColour(int button) {
@@ -243,6 +239,7 @@ public class Note : IEquatable<Note>{ //make list of notes
                             // if it does matter, fallse=right,true=left
     //colour based on button hit
 
+    ///public T Item { get; set; }
     //1 button pressed
     public Note(float time, string noteType, Vector3 position, int button){ 
         this.time     = time;       

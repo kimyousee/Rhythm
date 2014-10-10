@@ -22,7 +22,7 @@ public class PushOneButton : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         string key = keyPushed();
-        target.key = key;
+        target.key.Add(key);
         // Debug.Log(target.key.Count);
     }
 

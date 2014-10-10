@@ -17,7 +17,7 @@ public class PushTwoButtons : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         string key = keysPushed();
-        target.key = key;
+        target.key.Add(key);
     }
     //... make function
     string keysPushed(){
