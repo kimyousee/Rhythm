@@ -31,15 +31,7 @@
 			"file": "Assets/Scripts/Target.cs",
 			"settings":
 			{
-				"buffer_size": 3451,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Assets/Scripts/NotesPool.cs",
-			"settings":
-			{
-				"buffer_size": 3460,
+				"buffer_size": 4398,
 				"line_ending": "Unix"
 			}
 		},
@@ -47,7 +39,15 @@
 			"file": "Assets/Scripts/SongObject.cs",
 			"settings":
 			{
-				"buffer_size": 10741,
+				"buffer_size": 10996,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/SongNotes.cs",
+			"settings":
+			{
+				"buffer_size": 920,
 				"line_ending": "Unix"
 			}
 		},
@@ -55,7 +55,7 @@
 			"file": "Assets/Scripts/PushOneButton.cs",
 			"settings":
 			{
-				"buffer_size": 1996,
+				"buffer_size": 1993,
 				"line_ending": "Unix"
 			}
 		},
@@ -63,7 +63,15 @@
 			"file": "Assets/Scripts/PushTwoButtons.cs",
 			"settings":
 			{
-				"buffer_size": 638,
+				"buffer_size": 635,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Assets/Scripts/HoldOneButton.cs",
+			"settings":
+			{
+				"buffer_size": 1722,
 				"line_ending": "Unix"
 			}
 		},
@@ -79,9 +87,13 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 363.0,
+		"height": 66.0,
 		"selected_items":
 		[
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
 			[
 				"Package Control: ",
 				"Package Control: Disable Package"
@@ -99,7 +111,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 609.0
+		"width": 586.0
 	},
 	"console":
 	{
@@ -116,9 +128,11 @@
 	},
 	"file_history":
 	[
-		"/C/Users/Kim/Documents/Projects/Rhythm/Assets/Scripts/HoldOneButton.cs",
-		"/C/Users/Kim/Documents/Projects/Rhythm/.gitignore",
+		"/C/Users/Kim/Documents/Projects/Rhythm/Assets/Scripts/NotesPool.cs",
 		"/C/Users/Kim/Documents/Projects/Rhythm/Assets/Scripts/GameController.cs",
+		"/C/Users/Kim/Documents/Projects/Rhythm/Assets/Scripts/HoldOneButton.cs",
+		"/C/Users/Kim/Documents/UW Assignments/2A/CS241/a2p8v1.asm",
+		"/C/Users/Kim/Documents/Projects/Rhythm/.gitignore",
 		"/C/Users/Kim/Documents/Projects/Rhythm/Assets/Scripts/PushOneButton.cs",
 		"/C/Users/Kim/AppData/Roaming/Sublime Text 2/Packages/User/Default (Windows).sublime-keymap",
 		"/C/Users/Kim/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
@@ -134,7 +148,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 100.0,
+		"height": 0.0,
 		"where_history":
 		[
 			""
@@ -145,6 +159,17 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"currentNote",
+			");\n",
+			"setUpNote",
+			"notes",
+			"currentNote",
+			"game",
+			"songNotes",
+			"return",
+			"Debug",
+			"active",
+			"key",
 			"noteType",
 			"this.transform.parent",
 			"base",
@@ -219,15 +244,15 @@
 					"file": "Assets/Scripts/Target.cs",
 					"settings":
 					{
-						"buffer_size": 3451,
+						"buffer_size": 4398,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1510,
-								1510
+								2185,
+								2185
 							]
 						],
 						"settings":
@@ -237,53 +262,25 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 21.0,
+						"translation.y": 520.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Assets/Scripts/NotesPool.cs",
-					"settings":
-					{
-						"buffer_size": 3460,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1934,
-								1934
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 464.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "Assets/Scripts/SongObject.cs",
 					"settings":
 					{
-						"buffer_size": 10741,
+						"buffer_size": 10996,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								290,
-								290
+								6435,
+								6435
 							]
 						],
 						"settings":
@@ -297,7 +294,34 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 456.0,
+						"translation.y": 1043.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Assets/Scripts/SongNotes.cs",
+					"settings":
+					{
+						"buffer_size": 920,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								875,
+								875
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -307,15 +331,15 @@
 					"file": "Assets/Scripts/PushOneButton.cs",
 					"settings":
 					{
-						"buffer_size": 1996,
+						"buffer_size": 1993,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								630,
-								630
+								664,
+								664
 							]
 						],
 						"settings":
@@ -325,7 +349,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 138.0,
+						"translation.y": 62.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -335,15 +359,15 @@
 					"file": "Assets/Scripts/PushTwoButtons.cs",
 					"settings":
 					{
-						"buffer_size": 638,
+						"buffer_size": 635,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								416,
-								416
+								331,
+								331
 							]
 						],
 						"settings":
@@ -360,6 +384,33 @@
 				},
 				{
 					"buffer": 5,
+					"file": "Assets/Scripts/HoldOneButton.cs",
+					"settings":
+					{
+						"buffer_size": 1722,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								282,
+								282
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Unity3D/UnityC#.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 108.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
 					"file": "Assets/Scripts/GameController.cs",
 					"settings":
 					{
@@ -370,8 +421,8 @@
 						"selection":
 						[
 							[
-								734,
-								734
+								576,
+								576
 							]
 						],
 						"settings":
@@ -381,7 +432,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 934.0,
+						"translation.y": 179.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

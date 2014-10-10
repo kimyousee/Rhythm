@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour {
     private int score;
     private MainMenu chosen;
     void Awake(){
-        bps = 60; //temp!
+        bps = 20; //temp!
         maxNotes = bps / 18;
         DontDestroyOnLoad (transform.gameObject); // Saves variables from other loads (i.e. difficulty)
     }
