@@ -19,6 +19,7 @@ public class SongObject : MonoBehaviour {
     private string song;
     private int bps;                 //needed to know how fast to fade in/out
     public List<Note> notes;         //list to keep all notes for the song
+    // public Queue<GameObject> activeNotes;
 
     //called before start function
     void Awake(){
@@ -67,6 +68,8 @@ public class SongObject : MonoBehaviour {
         obj.renderer.material.color = c;
 
         obj.SetActive(true);
+        target.activeNotes.Enqueue(obj);
+        target.noteType.Add(note.noteType);
         return obj;
     }
 
@@ -101,40 +104,14 @@ public class SongObject : MonoBehaviour {
                                                 //+fadeTime);
         }
     }
-    /*IEnumerator fadeInOut(GameObject note, string which){
-        if (which == "in"){
-            if (note.active) iTween.FadeTo(note,1f,1f);
-            else yield break;
-        } else if (which == "out"){
-            if (note.active) iTween.FadeTo(note,0f,1f);
-            else yield break;
-        }
-        yield return new WaitForSeconds(1f); // fame this the same time as 3rd arg above
-    }*/
+
     IEnumerator Fade(GameObject note, Note noteObj){
         GameObject noteCheck = note;
         if (note != noteCheck) yield break;
-        Debug.Log("starting fade0");
+        // Debug.Log("starting fade0");
         if (note.active) yield return StartCoroutine(fadeInOut(note, "in",noteObj)); // Fade in
         else yield break;
-        Debug.Log("Done fade in");
-        /*Debug.Log(noteObj.noteType);
-        if (note != noteCheck) yield break;
-        if (note.active){
-            if (note != noteCheck) yield break;
-            Debug.Log(noteObj.noteType);
-            if (noteObj.noteType == "hold1")
-                yield return new WaitForSeconds(noteObj.hold);
-            else if (noteObj.noteType == "push1")
-                yield return new WaitForSeconds(0.1f); // can get perfect note for 0.1s
-        }
-        else yield break;
-        if (note.active){
-            if (note != noteCheck) yield break;
-            Debug.Log("Fading out");
-            yield return StartCoroutine(fadeInOut(note,"out",noteObj)); // Fade out
-            note.SetActive(false);
-        } else yield break;*/
+        // Debug.Log("Done fade");
     }
     
     IEnumerator fadeInOut(GameObject obj,string into,Note noteObj) {
@@ -144,11 +121,7 @@ public class SongObject : MonoBehaviour {
                 Color c = obj.renderer.material.color;
                 c.a = f;
                 obj.renderer.material.color = c;
-                // Debug.Log(obj.renderer.material.color.a);
                 if (obj.renderer.material.color.a >= 0.999) { //if circle is solid
-                    // Color solid = obj.renderer.material.color;
-                    // solid.a = 1;
-                    // obj.renderer.material.color = solid;
                     into = "out";
                     if (noteObj.noteType == "hold1")
                         yield return new WaitForSeconds(noteObj.hold);
@@ -159,14 +132,15 @@ public class SongObject : MonoBehaviour {
                 yield return new WaitForSeconds (rate);
             }
         }
-        if (into == "out") {
+        if (into == "out" && obj.active) {
             for (float f = 1f; f >= 0.05f && obj.active; f -= 0.100f) {
                 Color c = obj.renderer.material.color;
                 c.a = f;
                 obj.renderer.material.color = c;
                 yield return new WaitForSeconds (rate);
             }
-            obj.SetActive(false);
+            // Debug.Log("In fade out exit");
+            target.popActiveChild();
         }
     }
 

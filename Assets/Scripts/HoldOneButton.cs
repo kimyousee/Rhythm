@@ -11,7 +11,7 @@ public class HoldOneButton : MonoBehaviour {
         GameObject targCtrObj = GameObject.Find("Target");
         target = targCtrObj.GetComponent<Target>();
         this.transform.parent = target.transform;
-        target.noteType.Add("hold1");
+        // target.noteType.Add("hold1");
         target.note = note;
     }
     

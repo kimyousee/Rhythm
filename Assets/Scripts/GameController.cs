@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour {
     public int maxNotes;
     public int bps;
 
-    private int score;
+    public int score;
     private MainMenu chosen;
     void Awake(){
         bps = 20; //temp!
@@ -26,9 +26,9 @@ public class GameController : MonoBehaviour {
     public int calculateScore(Note note, float time, string keyPushed, string keyPushed2="", float holdTimer=0f){
         int button  = noteToVal(keyPushed);
         int button2 = noteToVal(keyPushed2);
-        
+        Debug.Log("calculating score from " + score);
         float timeDiff = Mathf.Abs(note.time - time);
-        if (timeDiff > 0.5) return score;
+        // if (timeDiff > 0.5) return score;
         
         // needed to know how far the button they pushed is from the actual button
         int noteDiff  = Mathf.Abs(button  - note.button);
@@ -85,7 +85,7 @@ public class GameController : MonoBehaviour {
                 return score;
             }
             // single note
-            if (note.button2 == 0){
+            else if (note.button2 == 0){
                 if (note.button == button){
                     score += (int)(100-timeDiff*100);
                     return score;

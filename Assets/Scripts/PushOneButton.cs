@@ -10,7 +10,7 @@ public class PushOneButton : MonoBehaviour {
         GameObject targCtrObj = GameObject.Find("Target");
         target = targCtrObj.GetComponent<Target>();
         this.transform.parent = target.transform;
-        target.noteType.Add("push1");
+        // target.noteType.Add("push1");
         target.note = note;
     }
     // Note sure if this is needed; check later.

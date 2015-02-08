@@ -12,19 +12,23 @@ public class Target : MonoBehaviour {
     public Note note;       // get info of actual note to hit
     public List<Note> notes;
     public List<string> noteType; // to know if target has to be pushed or held
+    public Queue<GameObject> activeNotes; 
     public int score;
     public int bps;
     private int currentNote;
     private float idleCounter;
+    private float delay;
+    private string keyHeld;
     private GameController gameCtr;
     private SongObject songObj;
 
+    // private int[] activeChildren ;
     void Awake(){
         key = "";
         timer = 0.0f;
         holdTimer = 0.0f;
         currentNote = 0;
-        idleCounter = 1f/bps;
+        idleCounter = 0;
     }
 
     // Use this for initialization
@@ -36,68 +40,63 @@ public class Target : MonoBehaviour {
         // note = songCtrObj.GetComponent<Note>();
         notes = songObj.notes;
         bps = gameCtr.bps;
+        delay = 1f/bps * 10f * 2f + 0.1f;
+        activeNotes = new Queue<GameObject>();
+        // activeChildren = new int[notes.Count];
     }
     
     // Update is called once per frame
     void Update () {
         timer += Time.deltaTime; //Increment time
-        // find active children indeces
-        int[] activeChildren = new int[notes.Count];
-        for(int i = currentNote; i<this.transform.GetChildCount() && i<notes.Count;i++){
-            // if it's set active in the array but it isn't active anymore, deactivate it
-            if (activeChildren[i] == 1 && !this.transform.GetChild(i).gameObject.active){
-                activeChildren[i] = 0;
-            } // if it's still active
-            else if (this.transform.GetChild(i).gameObject.active){
-                activeChildren[i] = 1;
-                if (i>0 && activeChildren[i-1] == 0) currentNote = i;
-                if (i==0) currentNote = i;
-                Debug.Log("HERE");
-                Debug.Log(currentNote);
-            }
-        }
-        Debug.Log(noteType[currentNote]);
-        Debug.Log(currentNote);
+        // Debug.Log(noteType[currentNote]);
+        // Debug.Log(currentNote);
         // When a key is pushed, destroy the target. Calculate score
-        if (noteType[currentNote] == "push1"){
-            if (!string.IsNullOrEmpty(key) && key.Length != 0) {
-                score = gameCtr.calculateScore(notes[currentNote],timer,key);
-                // reset
-                timer = 0;
-                key = "";
-                //set child to false
-                this.transform.GetChild(currentNote).gameObject.SetActive(false); ////
-            }
-        }
-        if (noteType[currentNote] == "hold1"){
-            holdTimer = 0;
-            if (!string.IsNullOrEmpty(key) && key.Length != 0) { //if they are pushing/hosding a key
-                if (Input.GetButton(key)){ //count how long they hold key
-                    holdTimer += Time.deltaTime;
+        if (currentNote != -1 && currentNote < noteType.Count){
+            if (noteType[currentNote] == "push1"){
+                if (!string.IsNullOrEmpty(key) && key.Length != 0) {
+                    score = gameCtr.calculateScore(notes[currentNote],timer,key);
+                    // reset
+                    timer = 0;
+                    key = "";
+                    popActiveChild();
+                    // Debug.Log("Set push button to not active");
                 }
-                if (Input.GetButtonUp(key) ){ //held key is released
-                    if (!(this.transform.GetChild(currentNote).gameObject.active)){
-                        holdTimer = 0;
+            }
+            else if (noteType[currentNote] == "hold1"){
+                if (!string.IsNullOrEmpty(key) && (key.Length != 0 || keyHeld.Length != 0)) { //if they are pushing/holding a key
+                    if (Input.GetButton(key)){ //count how long they hold key
+                        keyHeld = key;
+                        holdTimer += Time.deltaTime;
                     }
+
+                }
+                else if (string.IsNullOrEmpty(key) && holdTimer == 0) {// when they don't press anything, time 
+                    idleCounter += Time.deltaTime;
+                    if (idleCounter >= delay) {
+                        popActiveChild();
+                    }
+                }
+
+                if (key.Length != 0 && keyHeld.Length != 0 && Input.GetButtonUp(keyHeld) && holdTimer != 0 && currentNote >= 0){ //held key is released
+                    // Debug.Log("HERE_HOLD");
+                    // if (!(this.transform.GetChild(currentNote).gameObject.active)){ // if note is not active
+                    //     holdTimer = 0;
+                    // }
                     gameCtr.calculateScore(notes[currentNote],timer,key,"",holdTimer);
                     timer = 0;
                     holdTimer = 0; 
                     key = "";
-                    this.transform.GetChild(currentNote).gameObject.SetActive(false);
+                    keyHeld = "";
+                    // Debug.Log("In hold note exit");
+                    popActiveChild();
 
                 }
-            }
-            else if (string.IsNullOrEmpty(key) && holdTimer == 0) {// when they don't press anything, time 
-                idleCounter -= Time.deltaTime;
-                if (idleCounter <= 0) {
-                    this.transform.GetChild(currentNote).gameObject.SetActive(false);
-                }
-            }
-            Debug.Log(idleCounter);
+                // Debug.Log("Holding for: " + holdTimer);
+                // Debug.Log("idleCounter: " + idleCounter + " Versus delay: " + delay);
 
+            }
+            //make push2 case
         }
-        //make push2 case
-
 
         /*
         // Detect when circle is solid, then fade out
@@ -112,5 +111,15 @@ public class Target : MonoBehaviour {
             // move target to next spot (?)
 
         }*/
+    }
+
+    public void popActiveChild(){
+        if ( currentNote != -1 && activeNotes.Peek().active){
+            activeNotes.Peek().SetActive(false); ////
+            activeNotes.Dequeue(); // pop first note on queue
+            if (currentNote != notes.Count-1){
+                currentNote++; // move to next note, except when currentNote is the last note
+            } else currentNote = -1;
+        }
     }
 }
